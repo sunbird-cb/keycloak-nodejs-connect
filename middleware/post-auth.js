@@ -49,9 +49,16 @@ module.exports = function (keycloak) {
 
         request.kauth.grant = grant;
         try {
-          keycloak.authenticated(request);
+          keycloak.authenticated(request, function (err, data) {
+            if (err) {
+              console.log('error authenticating', err);
+              keycloak.accessDenied(request, response, next);
+            } else {
+              response.redirect(cleanUrl);
+            }
+          });
         } catch (err) {
-          console.log(err);
+          console.log('caught error while authenticating', err);
         }
         response.redirect(cleanUrl);
       }).catch((err) => {
