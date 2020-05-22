@@ -24,6 +24,10 @@ const Grant = require('./grant');
 const Token = require('./token');
 var Rotation = require('./rotation');
 
+
+
+const httpsAgent = new https.Agent({ keepAlive: true })
+const httpAgent  = new http.Agent({ keepAlive: true })
 /**
  * Construct a grant manager.
  *
@@ -466,6 +470,10 @@ const getProtocol = (opts) => {
   return opts.protocol === 'https:' ? https : http;
 };
 
+const getAgent = (opts) => {
+  return opts.protocol === 'https:' ? httpsAgent : httpAgent;
+};
+
 const nodeify = (promise, cb) => {
   if (typeof cb !== 'function') return promise;
   return promise.then((res) => cb(null, res)).catch((err) => cb(err));
@@ -509,7 +517,7 @@ const fetch = (manager, handler, options, params) => {
   return new Promise((resolve, reject) => {
     const data = (typeof params === 'string' ? params : querystring.stringify(params));
     options.headers['Content-Length'] = data.length;
-
+    options.agent = getAgent(options)
     const req = getProtocol(options).request(options, (response) => {
       if (response.statusCode < 200 || response.statusCode > 299) {
         return reject(new Error(response.statusCode + ':' + http.STATUS_CODES[ response.statusCode ]));
