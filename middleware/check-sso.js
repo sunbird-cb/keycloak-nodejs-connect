@@ -22,7 +22,7 @@ function forceCheckSSO (keycloak, request, response) {
   const host = request.hostname;
   const headerHost = request.headers.host.split(':');
   const port = headerHost[1] || '';
-  const protocol = request.protocol;
+  const protocol = request.headers['x-forwarded-proto'] || request.protocol;
   let hasQuery = ~(request.originalUrl || request.url).indexOf('?');
 
   const redirectUrl = protocol + '://' + host + (port === '' ? '' : ':' + port) + (request.originalUrl || request.url) + (hasQuery ? '&' : '?') + 'auth_callback=1';
