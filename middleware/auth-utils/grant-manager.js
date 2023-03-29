@@ -514,6 +514,7 @@ const postOptions = (manager, path) => {
 };
 
 const fetch = (manager, handler, options, params) => {
+  console.log('grant-manager: options: ' + JSON.stringify(options));
   return new Promise((resolve, reject) => {
     const data = (typeof params === 'string' ? params : querystring.stringify(params));
     options.headers['Content-Length'] = data.length;
