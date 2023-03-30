@@ -50,7 +50,7 @@ module.exports = function (keycloak) {
 
         request.kauth.grant = grant;
         try {
-          keycloak.authenticated(request, function (err, data) {
+          keycloak.authenticated(request, response, function (err, data) {
             if (err) {
               console.log('error authenticating', err);
               keycloak.accessDenied(request, response, next);
