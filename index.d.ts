@@ -10,7 +10,7 @@ declare class Keycloak {
 
 	middleware(options?: Keycloak.MiddlewareOptions): RequestHandler;
 	protect(spec?: string | Keycloak.SpecHandler): RequestHandler;
-	authenticated: (request: Request, next: any) => void;
+	authenticated: (request: Request, response: Response, next: any) => void;
 	deauthenticated: (request: Request) => void;
 	accessDenied: (request: Request, response: Response) => void;
 	getGrant: (request: Request, response: Response) => Promise<Keycloak.Grant>;

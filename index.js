@@ -269,7 +269,7 @@ Keycloak.prototype.checkSso = function () {
  *
  * @param {Object} request The HTTP request.
  */
-Keycloak.prototype.authenticated = function (request, next) {
+Keycloak.prototype.authenticated = function (request, response, next) {
   // no-op
 };
 
