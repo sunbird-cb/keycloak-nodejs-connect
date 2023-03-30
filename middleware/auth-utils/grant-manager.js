@@ -103,7 +103,7 @@ GrantManager.prototype.obtainFromCode = function obtainFromCode (request, code, 
   };
   const handler = createHandler(this);
   const options = postOptions(this);
-
+  console.log('grant-manager: objectFromCode: params: ' + JSON.stringify(params))
   return nodeify(fetch(this, handler, options, params), callback);
 };
 

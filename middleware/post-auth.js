@@ -32,7 +32,8 @@ module.exports = function (keycloak) {
       console.log('Error from postAuth', { queryObj: request.query});
       return keycloak.accessDenied(request, response, next);
     }
-
+    console.log('post-auth: trying to get grant from code....')
+    console.log('received code: ' + request.query.code)
     keycloak.getGrantFromCode(request.query.code, request, response)
       .then(grant => {
         let urlParts = {
